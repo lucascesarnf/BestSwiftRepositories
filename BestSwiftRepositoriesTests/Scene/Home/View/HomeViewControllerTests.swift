@@ -20,10 +20,14 @@ class HomeViewControllerTest: XCTestCase {
     let executor = MockExecutor()
     lazy var provider = ServiceProvider<HomeService>(executor: executor)
     lazy var viewModel = HomeViewModel(provider: provider, reposPerPage: 3)
+    let strategy: Snapshotting<UIViewController, UIImage> = Snapshotting.image(
+        precision: 0.90,
+        size: CGSize(width: 300, height: 600)
+    )
     
     func testLoadState() {
         let viewController = HomeViewController(viewModel: viewModel)
-        assertSnapshot(matching: viewController, as: .image(on: .iPhone8))
+        assertSnapshot(matching: viewController, as: strategy)
     }
     
     func testRequestFirstPage() {
@@ -42,7 +46,7 @@ class HomeViewControllerTest: XCTestCase {
         XCTAssertNotNil(sink)
         waitForExpectations(timeout: 3, handler: nil)
         
-        assertSnapshot(matching: viewController, as: .image(on: .iPhone8))
+        assertSnapshot(matching: viewController, as: strategy)
     }
     
     func testRequestTwoPages() {
@@ -58,7 +62,7 @@ class HomeViewControllerTest: XCTestCase {
             if repositories.count > 0 && !lastValidation {
                 numberOfPages += 1
                 if numberOfPages == 1 {
-                    assertSnapshot(matching: viewController, as: .image(on: .iPhone8))
+                    assertSnapshot(matching: viewController, as: self.strategy)
                     self.viewModel.loadRepositories()
                 } else if numberOfPages == 2 {
                     lastValidation = true
@@ -69,7 +73,7 @@ class HomeViewControllerTest: XCTestCase {
         XCTAssertNotNil(sink)
         
         waitForExpectations(timeout: 3, handler: nil)
-        assertSnapshot(matching: viewController, as: .image(on: .iPhone8))
+        assertSnapshot(matching: viewController, as: strategy)
     }
     
     func testResetData() {
@@ -87,12 +91,12 @@ class HomeViewControllerTest: XCTestCase {
             if repositories.count > 0 && !lastValidation {
                 numberOfPages += 1
                 if numberOfPages == 1 {
-                    assertSnapshot(matching: viewController, as: .image(on: .iPhone8))
+                    assertSnapshot(matching: viewController, as: self.strategy)
                     self.viewModel.loadRepositories()
                 } else if numberOfPages == 2 {
                     lastValidation = true
                     dataCleaned = true
-                    assertSnapshot(matching: viewController, as: .image(on: .iPhone8))
+                    assertSnapshot(matching: viewController, as: self.strategy)
                     self.viewModel.resetData()
                 }
             }
@@ -114,7 +118,7 @@ class HomeViewControllerTest: XCTestCase {
         XCTAssertNotNil(stateSynk)
         
         waitForExpectations(timeout: 3, handler: nil)
-        assertSnapshot(matching: viewController, as: .image(on: .iPhone8))
+        assertSnapshot(matching: viewController, as: strategy)
     }
     
     /// TEST INCOMPLETE
