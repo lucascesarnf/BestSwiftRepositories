@@ -27,7 +27,7 @@ class HomeViewControllerTest: XCTestCase {
     
     func testLoadState() {
         let viewController = HomeViewController(viewModel: viewModel)
-        assertSnapshot(matching: viewController, as: strategy)
+        assertSnapshot(matching: viewController, as: strategy, line: 30)
     }
     
     func testRequestFirstPage() {
@@ -46,7 +46,7 @@ class HomeViewControllerTest: XCTestCase {
         XCTAssertNotNil(sink)
         waitForExpectations(timeout: 3, handler: nil)
         
-        assertSnapshot(matching: viewController, as: strategy)
+        assertSnapshot(matching: viewController, as: strategy, line: 49)
     }
     
     func testRequestTwoPages() {
@@ -62,7 +62,7 @@ class HomeViewControllerTest: XCTestCase {
             if repositories.count > 0 && !lastValidation {
                 numberOfPages += 1
                 if numberOfPages == 1 {
-                    assertSnapshot(matching: viewController, as: self.strategy)
+                    assertSnapshot(matching: viewController, as: self.strategy, line: 65)
                     self.viewModel.loadRepositories()
                 } else if numberOfPages == 2 {
                     lastValidation = true
@@ -73,7 +73,7 @@ class HomeViewControllerTest: XCTestCase {
         XCTAssertNotNil(sink)
         
         waitForExpectations(timeout: 3, handler: nil)
-        assertSnapshot(matching: viewController, as: strategy)
+        assertSnapshot(matching: viewController, as: strategy, line: 76)
     }
     
     func testResetData() {
@@ -91,12 +91,12 @@ class HomeViewControllerTest: XCTestCase {
             if repositories.count > 0 && !lastValidation {
                 numberOfPages += 1
                 if numberOfPages == 1 {
-                    assertSnapshot(matching: viewController, as: self.strategy)
+                    assertSnapshot(matching: viewController, as: self.strategy, line: 94)
                     self.viewModel.loadRepositories()
                 } else if numberOfPages == 2 {
                     lastValidation = true
                     dataCleaned = true
-                    assertSnapshot(matching: viewController, as: self.strategy)
+                    assertSnapshot(matching: viewController, as: self.strategy, line: 99)
                     self.viewModel.resetData()
                 }
             }
@@ -108,7 +108,7 @@ class HomeViewControllerTest: XCTestCase {
             if dataCleaned {
                 if case .empty = state {
                     dataCleaned = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         expectation.fulfill()
                     }
                 }
@@ -117,8 +117,8 @@ class HomeViewControllerTest: XCTestCase {
         
         XCTAssertNotNil(stateSynk)
         
-        waitForExpectations(timeout: 3, handler: nil)
-        assertSnapshot(matching: viewController, as: strategy)
+        waitForExpectations(timeout: 4, handler: nil)
+        assertSnapshot(matching: viewController, as: strategy,  line: 121)
     }
     
     /// TEST INCOMPLETE
@@ -138,6 +138,6 @@ class HomeViewControllerTest: XCTestCase {
         }
         XCTAssertNotNil(sink)
         waitForExpectations(timeout: 3, handler: nil)
-        assertSnapshot(matching: viewController, as: .windowedImage)
+        assertSnapshot(matching: viewController, as: .windowedImage, line: 141)
     }
 }
