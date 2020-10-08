@@ -32,15 +32,13 @@ class HomeViewControllerTest: XCTestCase {
     
     func testRequestFirstPage() {
         let expectation = self.expectation(description: "Load first repositories page with Success")
-        let viewController = HomeViewController(viewModel: viewModel)
         executor.jsonFile = jsonFile
+        let viewController = HomeViewController(viewModel: viewModel)
         viewController.viewDidLoad()
         
         let sink = viewModel.$repositories.sink { repositories in
             if repositories.count > 0 {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    expectation.fulfill()
-                }
+                expectation.fulfill()
             }
         }
         XCTAssertNotNil(sink)
@@ -78,12 +76,12 @@ class HomeViewControllerTest: XCTestCase {
     
     func testResetData() {
         let expectation = self.expectation(description: "Reset viewModel data with Success")
-        let viewController = HomeViewController(viewModel: viewModel)
+        
         executor.jsonFile = jsonFile
+        let viewController = HomeViewController(viewModel: viewModel)
         viewController.viewDidLoad()
         
         var dataCleaned = false
-        
         var numberOfPages = 0
         var lastValidation = false
         
@@ -108,7 +106,7 @@ class HomeViewControllerTest: XCTestCase {
             if dataCleaned {
                 if case .empty = state {
                     dataCleaned = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         expectation.fulfill()
                     }
                 }
@@ -117,7 +115,7 @@ class HomeViewControllerTest: XCTestCase {
         
         XCTAssertNotNil(stateSynk)
         
-        waitForExpectations(timeout: 4, handler: nil)
+        waitForExpectations(timeout: 2, handler: nil)
         assertSnapshot(matching: viewController, as: strategy,  line: 121)
     }
     
@@ -133,7 +131,7 @@ class HomeViewControllerTest: XCTestCase {
         
         let sink = viewModel.$currentState.sink { state in
             if case .error = state {
-                    expectation.fulfill()
+                expectation.fulfill()
             }
         }
         XCTAssertNotNil(sink)
