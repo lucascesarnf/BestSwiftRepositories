@@ -7,7 +7,12 @@
 //
 
 import XCTest
+import SnapshotTesting
 @testable import BestSwiftRepositories
+
+
+/// ⚠️ Attention ⚠️
+/// To run the snapshot tests and achieve the same results it is necessary to select the `Test Schema` and select `iPhone 11` as the device.
 
 class HomeViewControllerTest: XCTestCase {
     
@@ -15,129 +20,120 @@ class HomeViewControllerTest: XCTestCase {
     let executor = MockExecutor()
     lazy var provider = ServiceProvider<HomeService>(executor: executor)
     lazy var viewModel = HomeViewModel(provider: provider, reposPerPage: 3)
-    lazy var viewController = HomeViewController(viewModel: viewModel)
     
-    func testLoadRepositoriesSuccess() {
-//        assertSnapshot(matching: viewController, as: .image)
-//        let expectedData = getExpectedData(from: jsonFile, decodeType: Repositories.self)
-//
-//        let expectation = self.expectation(description: "Load repositories with Success")
-//
-//        executor.jsonFile = jsonFile
-//        viewModel.loadRepositories()
-//
-//        let sink = viewModel.$repositories.sink { repositories in
-//            if repositories.count > 0 {
-//                XCTAssertEqual(repositories.count,
-//                               expectedData.items.count, "The number of elements is wrong")
-//                XCTAssertEqual(repositories.first,
-//                               expectedData.items.first, "The first elements do not match")
-//                XCTAssertEqual(repositories.last,
-//                               expectedData.items.last, "The last elements do not match")
-//                expectation.fulfill()
-//            }
-//        }
-//
-//        XCTAssertNotNil(sink)
-//        waitForExpectations(timeout: 1, handler: nil)
+    func testLoadState() {
+        let viewController = HomeViewController(viewModel: viewModel)
+        assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }
     
-    func testLoadRepositoriesFailure() {
-//        let expectedData = CustomError.generic
-//        let expectation = self.expectation(description: "Load repositories with Failure")
-//
-//        executor.jsonFile = nil
-//        viewModel.loadRepositories()
-//
-//        let sink = viewModel.$currentState.sink { state in
-//            switch state {
-//            case .error(let error):
-//                XCTAssertEqual(error,
-//                               expectedData, "The expected error and the given error are different")
-//                expectation.fulfill()
-//            default : break
-//            }
-//        }
-//
-//        XCTAssertNotNil(sink)
-//        waitForExpectations(timeout: 1, handler: nil)
+    func testRequestFirstPage() {
+        let expectation = self.expectation(description: "Load first repositories page with Success")
+        let viewController = HomeViewController(viewModel: viewModel)
+        executor.jsonFile = jsonFile
+        viewController.viewDidLoad()
+        
+        let sink = viewModel.$repositories.sink { repositories in
+            if repositories.count > 0 {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    expectation.fulfill()
+                }
+            }
+        }
+        XCTAssertNotNil(sink)
+        waitForExpectations(timeout: 3, handler: nil)
+        
+        assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }
     
-    func testLoadTwoRepositoriesPagesSuccess() {
-//        let expectedData = getExpectedData(from: jsonFile, decodeType: Repositories.self)
-//
-//        let expectation = self.expectation(description: "Load two repositories pages with Success")
-//
-//        executor.jsonFile = jsonFile
-//        viewModel.loadRepositories()
-//
-//        var numberOfPages = 0
-//        let sink = viewModel.$repositories.sink { repositories in
-//            if repositories.count > 0 {
-//                numberOfPages += 1
-//                if numberOfPages == 1 {
-//                    XCTAssertEqual(repositories.count,
-//                                   expectedData.items.count, "The number of elements is wrong")
-//                    XCTAssertEqual(repositories.first,
-//                                   expectedData.items.first, "The first elements do not match")
-//                    XCTAssertEqual(repositories.last,
-//                                   expectedData.items.last, "The last elements do not match")
-//
-//                    self.viewModel.loadRepositories()
-//                } else if numberOfPages == 2 {
-//                    XCTAssertEqual(repositories.count,
-//                    expectedData.items.count * 2, "The number of two pages elements is wrong")
-//                    expectation.fulfill()
-//                }
-//            }
-//        }
-//
-//        XCTAssertNotNil(sink)
-//        waitForExpectations(timeout: 1, handler: nil)
+    func testRequestTwoPages() {
+        let expectation = self.expectation(description: "Load two repositories pages with Success")
+        executor.jsonFile = jsonFile
+        let viewController = HomeViewController(viewModel: viewModel)
+        viewController.viewDidLoad()
+        
+        var numberOfPages = 0
+        var lastValidation = false
+        
+        let sink = viewModel.$repositories.sink { repositories in
+            if repositories.count > 0 && !lastValidation {
+                numberOfPages += 1
+                if numberOfPages == 1 {
+                    assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
+                    self.viewModel.loadRepositories()
+                } else if numberOfPages == 2 {
+                    lastValidation = true
+                    expectation.fulfill()
+                }
+            }
+        }
+        XCTAssertNotNil(sink)
+        
+        waitForExpectations(timeout: 3, handler: nil)
+        assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }
     
     func testResetData() {
-//        let expectedData = getExpectedData(from: jsonFile, decodeType: Repositories.self)
-//
-//        let expectation = self.expectation(description: "Reset viewModel data with Success")
-//
-//        executor.jsonFile = jsonFile
-//        viewModel.loadRepositories()
-//
-//        var dataCleaned = false
-//        var testRepositories:[Repository] = []
-//
-//        let repositorySink = viewModel.$repositories.sink { repositories in
-//            if repositories.count > 0 {
-//                testRepositories = repositories
-//                XCTAssertEqual(repositories[0],
-//                               expectedData.items[0], "The expected data and the given data are different")
-//                self.viewModel.resetData()
-//                dataCleaned = true
-//            }
-//        }
-//        XCTAssertNotNil(repositorySink)
-//
-//        let stateSynk = viewModel.$currentState.sink { state in
-//            if dataCleaned {
-//                if case .empty = state {
-//                    XCTAssertEqual(testRepositories.count,
-//                                   expectedData.items.count, "The number of elements is wrong")
-//                    XCTAssertEqual(testRepositories.first,
-//                                   expectedData.items.first, "The first elements do not match")
-//                    XCTAssertEqual(testRepositories.last,
-//                                   expectedData.items.last, "The last elements do not match")
-//
-//                    dataCleaned = false
-//                    expectation.fulfill()
-//                } else {
-//                    XCTFail("The viewModel data was not cleaned")
-//                }
-//            }
-//        }
-//        XCTAssertNotNil(stateSynk)
-//
-//        waitForExpectations(timeout: 1, handler: nil)
+        let expectation = self.expectation(description: "Reset viewModel data with Success")
+        let viewController = HomeViewController(viewModel: viewModel)
+        executor.jsonFile = jsonFile
+        viewController.viewDidLoad()
+        
+        var dataCleaned = false
+        
+        var numberOfPages = 0
+        var lastValidation = false
+        
+        let repositorySink = viewModel.$repositories.sink { repositories in
+            if repositories.count > 0 && !lastValidation {
+                numberOfPages += 1
+                if numberOfPages == 1 {
+                    assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
+                    self.viewModel.loadRepositories()
+                } else if numberOfPages == 2 {
+                    lastValidation = true
+                    dataCleaned = true
+                    assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
+                    self.viewModel.resetData()
+                }
+            }
+        }
+        
+        XCTAssertNotNil(repositorySink)
+        
+        let stateSynk = viewModel.$currentState.sink { state in
+            if dataCleaned {
+                if case .empty = state {
+                    dataCleaned = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        expectation.fulfill()
+                    }
+                }
+            }
+        }
+        
+        XCTAssertNotNil(stateSynk)
+        
+        waitForExpectations(timeout: 3, handler: nil)
+        assertSnapshot(matching: viewController, as: .image(on: .iPhoneX))
     }
-
+    
+    /// TEST INCOMPLETE
+    /// The solution suggestion given by the team that developed the framework is not working as expected
+    /// https://github.com/pointfreeco/swift-snapshot-testing/issues/279
+    /// In order to present a modal view controller, its parent view controller must already be a member of a window hierarchy. Therefore given that SnapshotTesting prepares its window internally, there's no way to correctly present the modal controller.
+    func testErrorAlert() {
+        let expectation = self.expectation(description: "Load repositories with Error")
+        let viewController = HomeViewController(viewModel: viewModel)
+        
+        viewModel.loadRepositories()
+        
+        let sink = viewModel.$currentState.sink { state in
+            if case .error = state {
+                    expectation.fulfill()
+            }
+        }
+        XCTAssertNotNil(sink)
+        waitForExpectations(timeout: 3, handler: nil)
+        assertSnapshot(matching: viewController, as: .windowedImage)
+    }
 }

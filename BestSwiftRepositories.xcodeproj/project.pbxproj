@@ -17,6 +17,9 @@
 		175AB910252CE0A8005AC27B /* RepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175AB90F252CE0A8005AC27B /* RepositoryCell.swift */; };
 		175AB913252CE1CD005AC27B /* UIView+Anchor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175AB912252CE1CD005AC27B /* UIView+Anchor.swift */; };
 		175AB916252CE6A3005AC27B /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 175AB915252CE6A3005AC27B /* Repository.swift */; };
+		17B3CF1F252EA88200AD5704 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 17B3CF1E252EA88200AD5704 /* SnapshotTesting */; };
+		17B3CF21252EAA5300AD5704 /* __Snapshots__ in Resources */ = {isa = PBXBuildFile; fileRef = 17B3CF20252EAA5300AD5704 /* __Snapshots__ */; };
+		17B3CF23252F616F00AD5704 /* Snapshot+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17B3CF22252F616F00AD5704 /* Snapshot+Window.swift */; };
 		17BD34D0252D032E000BB5F3 /* Executor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD34C8252D032D000BB5F3 /* Executor.swift */; };
 		17BD34D2252D032E000BB5F3 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD34CA252D032D000BB5F3 /* Service.swift */; };
 		17BD34D3252D032E000BB5F3 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 17BD34CB252D032D000BB5F3 /* Error.swift */; };
@@ -61,6 +64,8 @@
 		175AB90F252CE0A8005AC27B /* RepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryCell.swift; sourceTree = "<group>"; };
 		175AB912252CE1CD005AC27B /* UIView+Anchor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Anchor.swift"; sourceTree = "<group>"; };
 		175AB915252CE6A3005AC27B /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		17B3CF20252EAA5300AD5704 /* __Snapshots__ */ = {isa = PBXFileReference; lastKnownFileType = folder; path = __Snapshots__; sourceTree = "<group>"; };
+		17B3CF22252F616F00AD5704 /* Snapshot+Window.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Snapshot+Window.swift"; sourceTree = "<group>"; };
 		17BD34C8252D032D000BB5F3 /* Executor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Executor.swift; sourceTree = "<group>"; };
 		17BD34CA252D032D000BB5F3 /* Service.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		17BD34CB252D032D000BB5F3 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
@@ -92,6 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17B3CF1F252EA88200AD5704 /* SnapshotTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +142,7 @@
 		175AB8DF252CB70C005AC27B /* BestSwiftRepositories */ = {
 			isa = PBXGroup;
 			children = (
+				175AB8EE252CB714005AC27B /* Info.plist */,
 				17BD34C7252D02CE000BB5F3 /* Network */,
 				175AB911252CE1BE005AC27B /* Extension */,
 				175AB907252CB93C005AC27B /* Utils */,
@@ -148,8 +155,8 @@
 		175AB8F6252CB714005AC27B /* BestSwiftRepositoriesTests */ = {
 			isa = PBXGroup;
 			children = (
+				175AB8F9252CB714005AC27B /* Info.plist */,
 				17C8A02D252DED6C00AF67F3 /* Extension */,
-				17C8A02A252DE80300AF67F3 /* Source */,
 				17C8A027252DE77D00AF67F3 /* Network */,
 				17C8A022252DE71900AF67F3 /* Mock */,
 				17C8A020252DE6F900AF67F3 /* Scene */,
@@ -164,7 +171,6 @@
 				175AB8E2252CB70C005AC27B /* SceneDelegate.swift */,
 				175AB8E9252CB714005AC27B /* Assets.xcassets */,
 				175AB8EB252CB714005AC27B /* LaunchScreen.storyboard */,
-				175AB8EE252CB714005AC27B /* Info.plist */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -279,6 +285,7 @@
 		17C8A021252DE70100AF67F3 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				17B3CF20252EAA5300AD5704 /* __Snapshots__ */,
 				1723CE74252E75DC000802C7 /* View */,
 				1723CE72252E75CE000802C7 /* ViewModel */,
 				17C8A030252DEF3800AF67F3 /* Data */,
@@ -302,18 +309,11 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		17C8A02A252DE80300AF67F3 /* Source */ = {
-			isa = PBXGroup;
-			children = (
-				175AB8F9252CB714005AC27B /* Info.plist */,
-			);
-			path = Source;
-			sourceTree = "<group>";
-		};
 		17C8A02D252DED6C00AF67F3 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
 				17C8A02E252DEDAF00AF67F3 /* XCTestCase+ExpectedData.swift */,
+				17B3CF22252F616F00AD5704 /* Snapshot+Window.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -360,9 +360,13 @@
 			buildRules = (
 			);
 			dependencies = (
+				17B3CF19252EA08F00AD5704 /* PBXTargetDependency */,
 				175AB8F5252CB714005AC27B /* PBXTargetDependency */,
 			);
 			name = BestSwiftRepositoriesTests;
+			packageProductDependencies = (
+				17B3CF1E252EA88200AD5704 /* SnapshotTesting */,
+			);
 			productName = BestSwiftRepositoriesTests;
 			productReference = 175AB8F3252CB714005AC27B /* BestSwiftRepositoriesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -398,6 +402,7 @@
 			mainGroup = 175AB8D4252CB70C005AC27B;
 			packageReferences = (
 				17E3EB05252D58CB009266D7 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				17B3CF15252E9FCE00AD5704 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = 175AB8DE252CB70C005AC27B /* Products */;
 			projectDirPath = "";
@@ -423,6 +428,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17B3CF21252EAA5300AD5704 /* __Snapshots__ in Resources */,
 				17C8A02C252DEA4C00AF67F3 /* RepositoriesResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -462,6 +468,7 @@
 				17C8A032252DEF4A00AF67F3 /* Repository+Equatable.swift in Sources */,
 				1723CE76252E75FA000802C7 /* HomeViewControllerTests.swift in Sources */,
 				17C8A02F252DEDAF00AF67F3 /* XCTestCase+ExpectedData.swift in Sources */,
+				17B3CF23252F616F00AD5704 /* Snapshot+Window.swift in Sources */,
 				17C8A029252DE7AF00AF67F3 /* MockExecutor.swift in Sources */,
 				17C8A025252DE74600AF67F3 /* HomeViewModelTests.swift in Sources */,
 			);
@@ -474,6 +481,10 @@
 			isa = PBXTargetDependency;
 			target = 175AB8DC252CB70C005AC27B /* BestSwiftRepositories */;
 			targetProxy = 175AB8F4252CB714005AC27B /* PBXContainerItemProxy */;
+		};
+		17B3CF19252EA08F00AD5704 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 17B3CF18252EA08F00AD5704 /* SnapshotTesting */;
 		};
 /* End PBXTargetDependency section */
 
@@ -608,7 +619,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = BestSwiftRepositories/Source/Info.plist;
+				INFOPLIST_FILE = BestSwiftRepositories/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -625,7 +636,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = BestSwiftRepositories/Source/Info.plist;
+				INFOPLIST_FILE = BestSwiftRepositories/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -644,7 +655,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = BestSwiftRepositoriesTests/Source/Info.plist;
+				INFOPLIST_FILE = BestSwiftRepositoriesTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -669,7 +680,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = BestSwiftRepositoriesTests/Source/Info.plist;
+				INFOPLIST_FILE = BestSwiftRepositoriesTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -719,17 +730,35 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		17B3CF15252E9FCE00AD5704 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.7.2;
+			};
+		};
 		17E3EB05252D58CB009266D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.15.5;
+				kind = exactVersion;
+				version = 5.15.5;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		17B3CF18252EA08F00AD5704 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17B3CF15252E9FCE00AD5704 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
+		17B3CF1E252EA88200AD5704 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 17B3CF15252E9FCE00AD5704 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
 		17E3EB06252D58CB009266D7 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 17E3EB05252D58CB009266D7 /* XCRemoteSwiftPackageReference "Kingfisher" */;
