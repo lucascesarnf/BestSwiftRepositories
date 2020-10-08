@@ -74,8 +74,8 @@ class HomeViewControllerTest: XCTestCase {
         assertSnapshot(matching: viewController, as: strategy, line: 76)
     }
     
-    func testResetData() {
-        let expectation = self.expectation(description: "Reset viewModel data with Success")
+    func testResetPagesData() {
+        let expectation = self.expectation(description: "Reset pages data with Success")
         
         executor.jsonFile = jsonFile
         let viewController = HomeViewController(viewModel: viewModel)
