@@ -81,42 +81,47 @@ class HomeViewControllerTest: XCTestCase {
         let viewController = HomeViewController(viewModel: viewModel)
         viewController.viewDidLoad()
         
-        var dataCleaned = false
-        var numberOfPages = 0
-        var lastValidation = false
+        var shouldVerifyState = false
+        var pageNumber = 0
+        var isFistPage = true
+        var isLastValidation = false
         
         let repositorySink = viewModel.$repositories.sink { repositories in
-            if repositories.count > 0 && !lastValidation {
-                numberOfPages += 1
-                if numberOfPages == 1 {
-                    assertSnapshot(matching: viewController, as: self.strategy, line: 94)
-                    self.viewModel.loadRepositories()
-                } else if numberOfPages == 2 {
-                    lastValidation = true
-                    dataCleaned = true
-                    assertSnapshot(matching: viewController, as: self.strategy, line: 99)
-                    self.viewModel.resetData()
+            if repositories.count > 0 {
+                if isFistPage {
+                    pageNumber += 1
+                    if pageNumber == 1 {
+                        //Assert first state with 3 elements
+                        assertSnapshot(matching: viewController, as: self.strategy, line: 94)
+                        self.viewModel.loadRepositories()
+                    } else if pageNumber == 2 {
+                        isFistPage = false
+                        shouldVerifyState = true
+                        //Assert second state with 6 elements
+                        assertSnapshot(matching: viewController, as: self.strategy, line: 99)
+                        self.viewModel.resetData()
+                    }
+                } else if isLastValidation {
+                    expectation.fulfill()
                 }
             }
         }
-        
         XCTAssertNotNil(repositorySink)
         
         let stateSynk = viewModel.$currentState.sink { state in
-            if dataCleaned {
+            if shouldVerifyState {
                 if case .empty = state {
-                    dataCleaned = false
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        expectation.fulfill()
-                    }
+                    isLastValidation = true
+                    shouldVerifyState = false
                 }
             }
         }
-        
         XCTAssertNotNil(stateSynk)
         
-        waitForExpectations(timeout: 2, handler: nil)
-        assertSnapshot(matching: viewController, as: strategy,  line: 121)
+        waitForExpectations(timeout: 4, handler: nil)
+        
+        //Assert last state with reseted elements
+        assertSnapshot(matching: viewController, as: self.strategy,  line: 109)
     }
     
     /// TEST INCOMPLETE

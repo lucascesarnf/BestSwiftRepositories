@@ -45,16 +45,6 @@
                ReferencedContainer = "container:BestSwiftRepositories.xcodeproj">
             </BuildableReference>
          </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "1723CE65252E74FD000802C7"
-               BuildableName = "BestSwiftRepositoriesUITests.xctest"
-               BlueprintName = "BestSwiftRepositoriesUITests"
-               ReferencedContainer = "container:BestSwiftRepositories.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
