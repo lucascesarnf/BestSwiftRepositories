@@ -9,3 +9,6 @@
 * Xcode 11.5
 * Swift 5.2.4
 * iOS 13.7
+
+### Tests
+To run the tests you will need to set the `iPhone 8` device.
