@@ -2,8 +2,8 @@
 //  ServiceExecutor.swift
 //  ChuckNorrisFacts
 //
-//  Created by Lucas César  Nogueira Fonseca on 30/10/19.
-//  Copyright © 2019 Lucas César  Nogueira Fonseca. All rights reserved.
+//  Created by Lucas César  Nogueira Fonseca on 06/10/20.
+//  Copyright © 2020 Lucas César  Nogueira Fonseca. All rights reserved.
 //
 
 import Foundation

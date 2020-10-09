@@ -11,6 +11,7 @@ import Foundation
 
 
 extension Repository: Equatable {
+    
     public static func == (lhs: Repository, rhs: Repository) -> Bool {
         return lhs.description == rhs.description &&
         lhs.name == rhs.name &&
@@ -20,6 +21,7 @@ extension Repository: Equatable {
 }
 
 extension RepositoriesOwners: Equatable {
+    
     public static func == (lhs: RepositoriesOwners, rhs: RepositoriesOwners) -> Bool {
         return lhs.ownerImage == rhs.ownerImage &&
         lhs.ownerName == rhs.ownerName

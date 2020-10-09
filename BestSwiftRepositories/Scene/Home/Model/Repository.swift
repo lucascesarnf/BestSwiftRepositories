@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 
 struct Repositories: Codable {
+    
     let incompleteResults : Bool?
     let items : [Repository]
     let totalCount : Int
@@ -22,6 +23,7 @@ struct Repositories: Codable {
 }
 
 struct Repository: Codable {
+    
     let name: String
     let stars: Int
     let description: String?
@@ -34,6 +36,7 @@ struct Repository: Codable {
 }
 
 struct RepositoriesOwners: Codable {
+    
     let ownerImage, ownerName: String
     
     enum CodingKeys: String, CodingKey {

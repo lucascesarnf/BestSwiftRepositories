@@ -10,6 +10,7 @@ import Foundation
 @testable import BestSwiftRepositories
 
 class MockExecutor: ServiceExecutor {
+    
     private var shouldSave = true
     
     var jsonFile: String?

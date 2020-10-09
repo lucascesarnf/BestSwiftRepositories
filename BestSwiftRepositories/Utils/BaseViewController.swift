@@ -10,8 +10,8 @@ import UIKit
 
 class BaseViewController<CustomView: UIView>: UIViewController {
     
+    // MARK: - Variables
     private var spinner = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.large)
-    
     public var customView: CustomView {
          guard let customView = view as? CustomView else {
              fatalError("Expected view to be of type \(CustomView.self) but got \(type(of: view)) instead")
@@ -19,13 +19,14 @@ class BaseViewController<CustomView: UIView>: UIViewController {
          return customView
     }
     
+    // MARK: - LifeCycle
     override func loadView() {
         super.loadView()
         view = CustomView()
     }
     
+    // MARK: - Common Methods
     func startActivityIndicator() {
-      
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimating()
         

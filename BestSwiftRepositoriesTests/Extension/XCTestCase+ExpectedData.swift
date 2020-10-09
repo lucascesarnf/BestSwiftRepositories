@@ -11,6 +11,7 @@ import Foundation
 import XCTest
 
 extension XCTestCase {
+    
     func getExpectedData<U: Decodable>(from json: String, decodeType: U.Type) -> U {
         let expectedData = MockExecutor.getDataFromJson(jsonFile: json)
         return try! decodeType.decode(from: expectedData!)

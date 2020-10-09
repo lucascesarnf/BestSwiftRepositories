@@ -2,23 +2,13 @@
 //  Executor.swift
 //  ChuckNorrisFacts
 //
-//  Created by Lucas César  Nogueira Fonseca on 30/10/19.
-//  Copyright © 2019 Lucas César  Nogueira Fonseca. All rights reserved.
+//  Created by Lucas César  Nogueira Fonseca on 06/10/20.
+//  Copyright © 2020 Lucas César  Nogueira Fonseca. All rights reserved.
 //
 
 import Foundation
 
 class Executor: ServiceExecutor {
-    func printJsonData(data: Data) {
-        do {
-            if let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) {
-                let result = try? JSONSerialization.data(withJSONObject: jsonData, options: .prettyPrinted)
-                if let result = result, let dataString = String(data: result, encoding: .utf8) {
-                    print(dataString)
-                }
-            }
-        }
-    }
     
     func execute<T: Service>( _ service: T, completion: @escaping (Result<Data, Error>) -> Void) {
         
@@ -61,4 +51,15 @@ class Executor: ServiceExecutor {
         let result = try? APIError.decode(from: data)
         return result?.error
     }
+    
+    private func printJsonData(data: Data) {
+           do {
+               if let jsonData = try? JSONSerialization.jsonObject(with: data, options: []) {
+                   let result = try? JSONSerialization.data(withJSONObject: jsonData, options: .prettyPrinted)
+                   if let result = result, let dataString = String(data: result, encoding: .utf8) {
+                       print(dataString)
+                   }
+               }
+           }
+       }
 }

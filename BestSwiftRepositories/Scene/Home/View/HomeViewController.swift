@@ -13,14 +13,15 @@ import Combine
 
 final class HomeViewController: BaseViewController<UITableView> {
     
+    // MARK: - Variables and Constants
     @ObservedObject var viewModel: HomeViewModel
-    
     private let cellId = "RepositoryCell"
     private var tableView: UITableView?
     private var cancellables: Set<AnyCancellable> = []
     private var repositories:[Repository] = []
     private let refreshControl = UIRefreshControl()
     
+    // MARK: - Initializer
     init(viewModel: HomeViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -31,6 +32,7 @@ final class HomeViewController: BaseViewController<UITableView> {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView = customView
@@ -42,6 +44,7 @@ final class HomeViewController: BaseViewController<UITableView> {
         viewModel.loadRepositories()
     }
     
+    // MARK: - Private Methods
     private func bindViewModel() {
         bindViewModelState()
         bindViewModelRepositories()
@@ -93,6 +96,7 @@ final class HomeViewController: BaseViewController<UITableView> {
     }
 }
 
+// MARK: - TableViewDataSource
 extension HomeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         repositories.count
@@ -109,6 +113,7 @@ extension HomeViewController: UITableViewDataSource {
     }
 }
 
+// MARK: - TableViewDelegate
 extension HomeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         

@@ -10,6 +10,7 @@ import UIKit
 import SnapshotTesting
 
 extension Snapshotting where Value: UIViewController, Format == UIImage {
+    
   static var windowedImage: Snapshotting {
     return Snapshotting<UIImage, UIImage>.image.asyncPullback { vc in
       Async<UIImage> { callback in

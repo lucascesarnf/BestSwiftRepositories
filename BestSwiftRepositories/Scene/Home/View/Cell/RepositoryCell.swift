@@ -11,6 +11,7 @@ import Kingfisher
 
 class RepositoryCell: UITableViewCell {
     
+    // MARK: - Model
     var repository: Repository? {
         didSet {
             repositoryNameLabel.text = repository?.name
@@ -23,6 +24,7 @@ class RepositoryCell: UITableViewCell {
         }
     }
     
+    // MARK: - UI Atributes
     private let repositoryNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 18)
@@ -67,11 +69,7 @@ class RepositoryCell: UITableViewCell {
         return imageView
     }()
     
-    @available (*, unavailable)
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+    // MARK: - Initializer
     override init(
         style: UITableViewCell.CellStyle,
         reuseIdentifier: String?
@@ -141,5 +139,10 @@ class RepositoryCell: UITableViewCell {
             paddingRight: 10,
             height: 20
         )
+    }
+    
+    @available (*, unavailable)
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

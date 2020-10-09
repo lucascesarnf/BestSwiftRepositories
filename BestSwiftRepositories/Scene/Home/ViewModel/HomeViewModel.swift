@@ -16,6 +16,7 @@ final class HomeViewModel: ObservableObject {
         case error(CustomError)
     }
     
+    // MARK: - Variables
     @Published var repositories: [Repository] = []
     @Published var currentState: State = State.empty
     private var gitResponse: Repositories?
@@ -24,27 +25,20 @@ final class HomeViewModel: ObservableObject {
     private var makingRequest = false
     private var reposPerPage: Int
     
+    // MARK: - Initializer
     init(provider: ServiceProvider<HomeService> = ServiceProvider<HomeService>(), reposPerPage: Int = 15) {
         self.provider = provider
         self.reposPerPage = reposPerPage
     }
     
+    
+    // MARK: - Public Functions
     func resetData() {
         currentState = State.empty
         gitResponse = nil
         currentPage = 0
         
         loadRepositories()
-    }
-    
-    private func shouldFetchMoreRepos() -> Bool {
-        return currentPage < limitOfPages() && !makingRequest
-    }
-    
-    private func limitOfPages() -> Int {
-        let pageLimit = (gitResponse?.totalCount ?? 1) / reposPerPage
-        let pageLimitRounded = Int(CGFloat(pageLimit).rounded(.up))
-        return pageLimitRounded > 0 ? pageLimitRounded : 1
     }
     
     func loadRepositories() {
@@ -73,5 +67,16 @@ final class HomeViewModel: ObservableObject {
                 }
             )
         }
+    }
+    
+    // MARK: - Private Functions
+    private func shouldFetchMoreRepos() -> Bool {
+        return currentPage < limitOfPages() && !makingRequest
+    }
+    
+    private func limitOfPages() -> Int {
+        let pageLimit = (gitResponse?.totalCount ?? 1) / reposPerPage
+        let pageLimitRounded = Int(CGFloat(pageLimit).rounded(.up))
+        return pageLimitRounded > 0 ? pageLimitRounded : 1
     }
 }

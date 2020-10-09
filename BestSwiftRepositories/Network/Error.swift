@@ -2,12 +2,13 @@
 //  Error.swift
 //  ChuckNorrisFacts
 //
-//  Created by Lucas César  Nogueira Fonseca on 24/10/19.
-//  Copyright © 2019 Lucas César  Nogueira Fonseca. All rights reserved.
+//  Created by Lucas César  Nogueira Fonseca on 06/10/20.
+//  Copyright © 2020 Lucas César  Nogueira Fonseca. All rights reserved.
 //
 
 import Foundation
 enum CustomError: Error, Equatable {
+    
     case generic
     case notConnectedToInternet
     case networkConnectionLost
@@ -50,6 +51,7 @@ enum CustomError: Error, Equatable {
 }
 
 extension CustomError: LocalizedError {
+    
     public var errorDescription: String? {
         switch self {
         case .generic:
@@ -71,6 +73,7 @@ extension CustomError: LocalizedError {
 }
 
 struct APIError: LocalizedError, Codable, Hashable {
+    
     var status: Int
     var errorDescription: String
 
