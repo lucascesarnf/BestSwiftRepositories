@@ -61,7 +61,7 @@ class HomeViewControllerTest: XCTestCase {
             if repositories.count > 0 && !lastValidation {
                 numberOfPages += 1
                 if numberOfPages == 1 {
-                    assertSnapshot(matching: viewController, as: self.strategy)
+                    assertSnapshot(matching: viewController, as: self.strategy, timeout: 2)
                     self.viewModel.loadRepositories()
                 } else if numberOfPages == 2 {
                     lastValidation = true
@@ -71,7 +71,7 @@ class HomeViewControllerTest: XCTestCase {
         }
         XCTAssertNotNil(sink)
         
-        waitForExpectations(timeout: 3, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
         assertSnapshot(matching: viewController, as: strategy)
     }
     
@@ -90,7 +90,7 @@ class HomeViewControllerTest: XCTestCase {
                 pageNumber += 1
                 if pageNumber == 1 {
                     //Assert first state with 3 elements
-                    assertSnapshot(matching: viewController, as: self.strategy)
+                    assertSnapshot(matching: viewController, as: self.strategy, timeout: 2)
                     self.viewModel.loadRepositories()
                 } else if pageNumber == 2 {
                     shouldVerifyState = true
@@ -112,7 +112,7 @@ class HomeViewControllerTest: XCTestCase {
         }
         XCTAssertNotNil(stateSynk)
         
-        waitForExpectations(timeout: 4, handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
         
         //Assert last state with reseted elements
         assertSnapshot(matching: viewController, as: self.strategy)
