@@ -27,7 +27,7 @@ class HomeViewControllerTest: XCTestCase {
     
     func testLoadState() {
         let viewController = HomeViewController(viewModel: viewModel)
-        assertSnapshot(matching: viewController, as: strategy, line: 30)
+        assertSnapshot(matching: viewController, as: strategy)
     }
     
     func testRequestFirstPage() {
@@ -38,13 +38,14 @@ class HomeViewControllerTest: XCTestCase {
         
         let sink = viewModel.$repositories.sink { repositories in
             if repositories.count > 0 {
+                XCTAssertEqual(repositories.count, 3)
                 expectation.fulfill()
             }
         }
         XCTAssertNotNil(sink)
         waitForExpectations(timeout: 3, handler: nil)
         
-        assertSnapshot(matching: viewController, as: strategy, line: 49)
+        assertSnapshot(matching: viewController, as: strategy)
     }
     
     func testRequestTwoPages() {
@@ -60,7 +61,7 @@ class HomeViewControllerTest: XCTestCase {
             if repositories.count > 0 && !lastValidation {
                 numberOfPages += 1
                 if numberOfPages == 1 {
-                    assertSnapshot(matching: viewController, as: self.strategy, line: 65)
+                    assertSnapshot(matching: viewController, as: self.strategy)
                     self.viewModel.loadRepositories()
                 } else if numberOfPages == 2 {
                     lastValidation = true
@@ -71,7 +72,7 @@ class HomeViewControllerTest: XCTestCase {
         XCTAssertNotNil(sink)
         
         waitForExpectations(timeout: 3, handler: nil)
-        assertSnapshot(matching: viewController, as: strategy, line: 76)
+        assertSnapshot(matching: viewController, as: strategy)
     }
     
     func testResetPagesData() {
@@ -83,25 +84,19 @@ class HomeViewControllerTest: XCTestCase {
         
         var shouldVerifyState = false
         var pageNumber = 0
-        var isFistPage = true
-        var isLastValidation = false
-        
+
         let repositorySink = viewModel.$repositories.sink { repositories in
             if repositories.count > 0 {
-                if isFistPage {
-                    pageNumber += 1
-                    if pageNumber == 1 {
-                        //Assert first state with 3 elements
-                        assertSnapshot(matching: viewController, as: self.strategy, line: 94)
-                        self.viewModel.loadRepositories()
-                    } else if pageNumber == 2 {
-                        isFistPage = false
-                        shouldVerifyState = true
-                        //Assert second state with 6 elements
-                        assertSnapshot(matching: viewController, as: self.strategy, line: 99)
-                        self.viewModel.resetData()
-                    }
-                } else if isLastValidation {
+                pageNumber += 1
+                if pageNumber == 1 {
+                    //Assert first state with 3 elements
+                    assertSnapshot(matching: viewController, as: self.strategy)
+                    self.viewModel.loadRepositories()
+                } else if pageNumber == 2 {
+                    shouldVerifyState = true
+                    //Assert second state with 6 elements
+                    assertSnapshot(matching: viewController, as: self.strategy)
+                    self.viewModel.resetData()
                     expectation.fulfill()
                 }
             }
@@ -111,7 +106,6 @@ class HomeViewControllerTest: XCTestCase {
         let stateSynk = viewModel.$currentState.sink { state in
             if shouldVerifyState {
                 if case .empty = state {
-                    isLastValidation = true
                     shouldVerifyState = false
                 }
             }
@@ -121,7 +115,7 @@ class HomeViewControllerTest: XCTestCase {
         waitForExpectations(timeout: 4, handler: nil)
         
         //Assert last state with reseted elements
-        assertSnapshot(matching: viewController, as: self.strategy,  line: 109)
+        assertSnapshot(matching: viewController, as: self.strategy)
     }
     
     /// TEST INCOMPLETE
@@ -141,6 +135,6 @@ class HomeViewControllerTest: XCTestCase {
         }
         XCTAssertNotNil(sink)
         waitForExpectations(timeout: 3, handler: nil)
-        assertSnapshot(matching: viewController, as: .windowedImage, line: 141)
+        assertSnapshot(matching: viewController, as: .windowedImage)
     }
 }

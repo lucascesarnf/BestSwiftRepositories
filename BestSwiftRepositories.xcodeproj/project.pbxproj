@@ -735,7 +735,7 @@
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.7.2;
+				version = 1.9.0;
 			};
 		};
 		17E3EB05252D58CB009266D7 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
